@@ -1,0 +1,35 @@
+CTH_URL = 'https://www.cth.md/en/'
+
+HITACH_LINK = 'https://www.cth.md/en/Steel-tracks-HITACHI-Excavators-7582zc7659.html'
+
+
+images_links = ['flash/chain1.gif',
+               'flash/chain2.gif',
+               'flash/chain3.gif',
+               'flash/chain4.gif',
+               'flash/shoe1.gif',
+               'flash/shoe2.gif',
+               'flash/shoe3.gif',
+               'flash/bolt1.gif',
+               'flash/nut1.gif',
+               'flash/roller1.gif',
+               'flash/roller2.gif',
+               'flash/roller3.gif',
+               'flash/roller4.gif',
+               'flash/roller5.gif',
+               'flash/roller6.gif',
+               'flash/roller7.gif',
+               'flash/roller8.gif',
+               'flash/roller9.gif',
+               'flash/croller1.gif',
+               'flash/croller2.gif',
+               'flash/croller3.gif',
+               'flash/croller4.gif',
+               'flash/idler1.gif',
+               'flash/idler2.gif',
+               'flash/idler3.gif',
+               'flash/idler4.gif',
+               'flash/idler5.gif',
+               'flash/idler6.gif',
+               'flash/idler7.gif',
+               'flash/sprocket1.gif']
