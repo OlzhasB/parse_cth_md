@@ -166,4 +166,23 @@ def images_to_db(info):
 
 if __name__ == '__main__':
     parser = LinksParser()
+    # images_to_db(parser.get_images_content())
     track_group_to_db(parser.get_template_detail_info(parser.details_links['Track group']))
+    print('track group ok')
+    track_chain_to_db(parser.get_template_detail_info(parser.details_links['Track chain']))
+    print('track chain ok')
+    track_shoe_to_db(parser.get_template_detail_info(parser.details_links['Track shoe']))
+    print('track shoe ok')
+    track_bolt_to_db(parser.get_template_detail_info(parser.details_links['Track bolt']))
+    print('track bolt ok')
+    track_nut_to_db(parser.get_template_detail_info(parser.details_links['Track nut']))
+    print('track nut ok')
+    roller_fl_to_db(parser.get_template_detail_info(parser.details_links['Roller 1 Fl']))
+    print('roller fl ok')
+    carrier_roller_to_db(parser.get_template_detail_info(parser.details_links['Carrier Roller']))
+    print('carrier roller ok')
+    idler1_to_db(parser.get_template_detail_info(parser.details_links['Idler 1']))
+    print('idler1 ok')
+    segment_group_to_db(parser.get_template_detail_info(parser.details_links['Segment group']))
+    print('segment group ok')
+

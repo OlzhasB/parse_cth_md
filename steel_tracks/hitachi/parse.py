@@ -1,6 +1,7 @@
 import requests
 import urllib3
 import base64
+from io import BytesIO
 import src.steel_tracks.hitachi.conf as conf
 from bs4 import BeautifulSoup
 
@@ -91,7 +92,7 @@ class LinksParser:
             i += 1
         return str
 
-    def get_cross_reference_list(self, cross_reference):
+    def get_cross_reference_list(self, cross_reference, exists: bool):
         str = ''
         table = cross_reference
         rows = table.find_all('tr')
@@ -102,7 +103,11 @@ class LinksParser:
                 str += ', '
             str += td_s[0].text.strip() + ' ' + td_s[1].text.strip()
             i += 1
-        return str
+
+        table = cross_reference.find_all['table']
+        table = table[len(table)-1]
+
+
 
     def get_details_list(self, details):
         str = ''
@@ -151,16 +156,15 @@ class LinksParser:
                 equipment = soup.find('div', style='margin:10px;').previous_element
                 info_dict['Equipment'] = self.get_equipment_list(equipment)
 
-                info_dict['Cross Reference'] = None
                 cross_reference = soup.find('table', class_='tabelref')
                 if cross_reference:
-                    info_dict['Cross Reference'] = self.get_cross_reference_list(cross_reference)
-
+                    info_dict['Cross Reference'] = self.get_cross_reference_list(cross_reference, True)
+                else:
+                    info_dict['Cross Reference'] = self.get_cross_reference_list(equipment, False)
                 info_dict['Image'] = None
                 div_image = soup.find('div', class_='plansa')
                 if div_image:
                     info_dict['Image'] = div_image.find('img').get('src').split('/')[1].split('.')[0]
-
                 info_list.append(info_dict)
             except:
                 pass
@@ -175,7 +179,8 @@ class LinksParser:
             retries = 5
             while retries > 0:
                 try:
-                    image_info['code'] = base64.b64encode(requests.get(conf.CTH_URL + link, verify=False).content)
+                    buffered = BytesIO(requests.get(conf.CTH_URL + link, verify=False).content)
+                    image_info['code'] = base64.b64encode(buffered.getvalue())
                     break
                 except requests.RequestException as e:
                     print(
