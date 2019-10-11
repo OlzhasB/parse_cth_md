@@ -84,15 +84,17 @@ class LinksParser:
             for row in rows:
                 td_s = row.find_all('td')
                 for td in td_s:
-                    if td.find('a'):
+                    if td.find('a', attrs={'class': None}):
                         if j > 0:
                             str += ','
                         str += ' ' + td.text.strip()
+                    elif td.find('a', class_='tabelref'): # if cross reference started in equipment table
+                        return str
                     j += 1
             i += 1
         return str
 
-    def get_cross_reference_list(self, cross_reference, exists: bool):
+    def get_cross_reference_list(self, cross_reference):
         str = ''
         table = cross_reference
         rows = table.find_all('tr')
@@ -103,11 +105,7 @@ class LinksParser:
                 str += ', '
             str += td_s[0].text.strip() + ' ' + td_s[1].text.strip()
             i += 1
-
-        table = cross_reference.find_all['table']
-        table = table[len(table)-1]
-
-
+        return str
 
     def get_details_list(self, details):
         str = ''
@@ -156,11 +154,11 @@ class LinksParser:
                 equipment = soup.find('div', style='margin:10px;').previous_element
                 info_dict['Equipment'] = self.get_equipment_list(equipment)
 
-                cross_reference = soup.find('table', class_='tabelref')
+                info_dict['Cross Reference'] = None
+                cross_reference = soup.find(True, class_='tabelref')
                 if cross_reference:
-                    info_dict['Cross Reference'] = self.get_cross_reference_list(cross_reference, True)
-                else:
-                    info_dict['Cross Reference'] = self.get_cross_reference_list(equipment, False)
+                    info_dict['Cross Reference'] = self.get_cross_reference_list(cross_reference)
+
                 info_dict['Image'] = None
                 div_image = soup.find('div', class_='plansa')
                 if div_image:
